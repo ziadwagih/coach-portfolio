@@ -3,25 +3,63 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 
-const transformations = [
+type Transformation = {
+  featured: boolean
+
+  beforeFront: string
+  afterFront: string
+
+  beforeBack?: string
+  afterBack?: string
+}
+
+const transformations: Transformation[] = [
   {
-    before: '/transformations/transformation-1-before.webp',
-    after: '/transformations/transformation-1-after.webp',
+    featured: true,
+
+    beforeFront: '/transformations/transformation-1-before-front.jpg',
+    afterFront: '/transformations/transformation-1-after-front.jpg',
+
+    beforeBack: '/transformations/transformation-1-before-back.jpg',
+    afterBack: '/transformations/transformation-1-after-back.jpg',
   },
 
   {
-    before: '/transformations/transformation-2-before.webp',
-    after: '/transformations/transformation-2-after.webp',
+    featured: true,
+
+    beforeFront: '/transformations/transformation-2-before-front.jpg',
+    afterFront: '/transformations/transformation-2-after-front.jpg',
+
+    beforeBack: '/transformations/transformation-2-before-back.jpg',
+    afterBack: '/transformations/transformation-2-after-back.jpg',
   },
 
   {
-    before: '/transformations/transformation-3-before.webp',
-    after: '/transformations/transformation-3-after.webp',
+    featured: false,
+
+    beforeFront: '/transformations/transformation-3-before.jpg',
+    afterFront: '/transformations/transformation-3-after.jpg',
   },
 
   {
-    before: '/transformations/transformation-4-before.webp',
-    after: '/transformations/transformation-4-after.webp',
+    featured: false,
+
+    beforeFront: '/transformations/transformation-4-before.jpg',
+    afterFront: '/transformations/transformation-4-after.jpg',
+  },
+
+  {
+    featured: false,
+
+    beforeFront: '/transformations/transformation-5-before.jpg',
+    afterFront: '/transformations/transformation-5-after.jpg',
+  },
+
+  {
+    featured: false,
+
+    beforeFront: '/transformations/transformation-6-before.jpg',
+    afterFront: '/transformations/transformation-6-after.jpg',
   },
 ]
 
@@ -118,60 +156,109 @@ export default function Transformations() {
                 </div>
 
                 {/* Images */}
-                <div className="grid grid-cols-2 gap-4">
+                <div
+                  className={
+                    item.featured
+                      ? 'grid grid-cols-2 md:grid-cols-4 gap-4'
+                       : 'grid grid-cols-2 gap-4'
+  }
+>
 
-                  {/* BEFORE */}
-                  <div className="relative overflow-hidden rounded-[30px]">
+                  {/* BEFORE FRONT */}
+<div className="relative overflow-hidden rounded-[30px]">
 
-                    {/* Label */}
-                    <div className="absolute top-4 left-4 z-20 rounded-full border border-white/10 bg-black/40 backdrop-blur-xl px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/80">
-                      Before
-                    </div>
+  <div className="absolute top-4 left-4 z-20 rounded-full border border-white/10 bg-black/40 backdrop-blur-xl px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/80">
+    Before
+  </div>
 
-                    <div className="relative aspect-[4/5] overflow-hidden">
+  <div className="relative aspect-[4/5] overflow-hidden">
 
-                      <Image
-                        src={item.before}
-                        alt="Client before transformation"
-                        fill
-                        sizes="(max-width: 768px) 50vw, 25vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                      />
+    <Image
+      src={item.beforeFront}
+      alt="Client before transformation"
+      fill
+      sizes="(max-width: 768px) 50vw, 25vw"
+      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+    />
 
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
-                    </div>
+  </div>
 
-                  </div>
+</div>
 
-                  {/* AFTER */}
-                  <div className="relative overflow-hidden rounded-[30px]">
+{/* AFTER FRONT */}
+<div className="relative overflow-hidden rounded-[30px]">
 
-                    {/* Label */}
-                    <div className="absolute top-4 left-4 z-20 rounded-full border border-cyan-400/20 bg-cyan-400/10 backdrop-blur-xl px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-cyan-100">
-                      After
-                    </div>
+  <div className="absolute top-4 left-4 z-20 rounded-full border border-cyan-400/20 bg-cyan-400/10 backdrop-blur-xl px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-cyan-100">
+    After
+  </div>
 
-                    <div className="relative aspect-[4/5] overflow-hidden">
+  <div className="relative aspect-[4/5] overflow-hidden">
 
-                      <Image
-                        src={item.after}
-                        alt="Client after transformation"
-                        fill
-                        sizes="(max-width: 768px) 50vw, 25vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                      />
+    <Image
+      src={item.afterFront}
+      alt="Client after transformation"
+      fill
+      sizes="(max-width: 768px) 50vw, 25vw"
+      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+    />
 
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
-                    </div>
+  </div>
 
-                  </div>
+</div>
 
-                </div>
+{/* FEATURED BACK SHOTS */}
+{item.featured && (
+  <>
+    <div className="relative overflow-hidden rounded-[30px]">
 
+      <div className="absolute top-4 left-4 z-20 rounded-full border border-white/10 bg-black/40 backdrop-blur-xl px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/80">
+        Back
+      </div>
+
+      <div className="relative aspect-[4/5] overflow-hidden">
+
+        <Image
+          src={item.beforeBack}
+          alt="Client back before transformation"
+          fill
+          sizes="(max-width: 768px) 50vw, 25vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+
+      </div>
+
+    </div>
+
+    <div className="relative overflow-hidden rounded-[30px]">
+
+      <div className="absolute top-4 left-4 z-20 rounded-full border border-cyan-400/20 bg-cyan-400/10 backdrop-blur-xl px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-cyan-100">
+        Back Result
+      </div>
+
+      <div className="relative aspect-[4/5] overflow-hidden">
+
+        <Image
+          src={item.afterBack}
+          alt="Client back after transformation"
+          fill
+          sizes="(max-width: 768px) 50vw, 25vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+
+      </div>
+
+    </div>
+  </>
+)}
+ </div>
                 {/* Bottom atmosphere */}
                 <div className="mt-6 flex items-center justify-between">
 
