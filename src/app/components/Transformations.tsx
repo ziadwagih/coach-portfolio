@@ -222,7 +222,7 @@ export default function Transformations() {
       <div className="relative aspect-[4/5] overflow-hidden">
 
         <Image
-          src={item.beforeBack}
+          src={item.beforeBack!}
           alt="Client back before transformation"
           fill
           sizes="(max-width: 768px) 50vw, 25vw"
@@ -244,7 +244,7 @@ export default function Transformations() {
       <div className="relative aspect-[4/5] overflow-hidden">
 
         <Image
-          src={item.afterBack}
+          src={item.afterBack!}
           alt="Client back after transformation"
           fill
           sizes="(max-width: 768px) 50vw, 25vw"
