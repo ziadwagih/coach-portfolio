@@ -28,6 +28,7 @@ const links = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [hovered, setHovered] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,7 +60,7 @@ export default function Navbar() {
       "
     >
 
-      {/* Desktop / Tablet Navbar */}
+      {/* Desktop / Tablet */}
       <div className="hidden md:flex justify-center">
 
         <div
@@ -95,32 +96,73 @@ export default function Navbar() {
             "
           >
 
-            {links.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="
-                  rounded-full
+            {links.map((link) => {
+              const isHovered = hovered === link.href
 
-                  px-5
-                  py-2.5
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onMouseEnter={() => setHovered(link.href)}
+                  onMouseLeave={() => setHovered(null)}
+                  className="
+                    relative
 
-                  text-xs
-                  uppercase
-                  tracking-[0.22em]
+                    rounded-full
 
-                  text-white/45
+                    px-5
+                    py-2.5
 
-                  transition-all
-                  duration-500
+                    text-xs
+                    uppercase
+                    tracking-[0.22em]
 
-                  hover:bg-white/[0.05]
-                  hover:text-white
-                "
-              >
-                {link.name}
-              </a>
-            ))}
+                    transition-all
+                    duration-500
+                  "
+                >
+
+                  {isHovered && (
+                    <motion.div
+                      layoutId="navbar-hover"
+                      className="
+                        absolute
+                        inset-0
+
+                        rounded-full
+
+                        bg-white/[0.08]
+                        border
+                        border-white/10
+                      "
+                      transition={{
+                        type: 'spring',
+                        stiffness: 350,
+                        damping: 28,
+                      }}
+                    />
+                  )}
+
+                  <span
+                    className={`
+                      relative z-10
+
+                      transition-colors
+                      duration-300
+
+                      ${
+                        isHovered
+                          ? 'text-white'
+                          : 'text-white/45 hover:text-white'
+                      }
+                    `}
+                  >
+                    {link.name}
+                  </span>
+
+                </a>
+              )
+            })}
 
           </nav>
 
@@ -128,7 +170,7 @@ export default function Navbar() {
 
       </div>
 
-      {/* Mobile Floating Dock */}
+      {/* Mobile Dock */}
       <div className="md:hidden flex justify-center">
 
         <div
@@ -163,36 +205,81 @@ export default function Navbar() {
             "
           >
 
-            {links.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="
-                  flex
-                  items-center
-                  justify-center
+            {links.map((link) => {
+              const isHovered = hovered === link.href
 
-                  rounded-2xl
+              return (
+                <a
+  key={link.name}
+  href={link.href}
+  onClick={() => {
+    setHovered(link.href)
 
-                  px-1
-                  py-3
+    setTimeout(() => {
+      setHovered(null)
+    }, 700)
+  }}
+  className="
+    relative
 
-                  text-[9px]
-                  uppercase
-                  tracking-[0.18em]
+    flex
+    items-center
+    justify-center
 
-                  text-white/45
+    rounded-2xl
 
-                  transition-all
-                  duration-500
+    px-1
+    py-3
 
-                  hover:bg-white/[0.05]
-                  hover:text-white
-                "
-              >
-                {link.name}
-              </a>
-            ))}
+    text-[9px]
+    uppercase
+    tracking-[0.18em]
+
+    overflow-hidden
+  "
+>
+
+  {isHovered && (
+    <motion.div
+      layoutId="mobile-navbar-hover"
+      className="
+        absolute
+        inset-0
+
+        rounded-2xl
+
+        bg-white/[0.08]
+        border
+        border-white/10
+      "
+      transition={{
+        type: 'spring',
+        stiffness: 320,
+        damping: 26,
+      }}
+    />
+  )}
+
+  <span
+    className={`
+      relative z-10
+
+      transition-colors
+      duration-300
+
+      ${
+        isHovered
+          ? 'text-white'
+          : 'text-white/45'
+      }
+    `}
+  >
+    {link.name}
+  </span>
+
+</a>
+              )
+            })}
 
           </nav>
 
